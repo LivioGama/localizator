@@ -37,7 +37,7 @@ except ImportError:
 
 SCOPES = 'https://www.googleapis.com/auth/drive'
 CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Drive API Python Quickstart'
+APPLICATION_NAME = 'YOUR_PROJECT_NAME_GOES_HERE'
 
 
 def get_credentials():
@@ -51,7 +51,7 @@ def get_credentials():
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir, 'drive-python-quickstart.json')
+    credential_path = os.path.join(credential_dir, APPLICATION_NAME + '.json')
 
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
@@ -108,6 +108,11 @@ def main():
     Creates a Google Drive API service object and outputs the names and IDs
     for up to 10 files.
     """
+    if not os.path.exists(CLIENT_SECRET_FILE):
+        print('Enable the API and generate your ' + CLIENT_SECRET_FILE + ' and drag it in the same directory than this script '
+                                                                         'https://console.developers.google.com/flows/enableapi?apiid=drive')
+
+        exit(-1)
     credentials = get_credentials()
 
 
@@ -139,22 +144,6 @@ def main():
     if not args.keep_csv:
         os.remove(filename)
     print("Your files have been generated under '"+args.path+"'")
-
-
-def download_file(service, drive_file):
-    download_url = drive_file['exportLinks']['text/csv']
-    if args.gid:
-        download_url += "&gid=" + args.gid
-    if download_url:
-        resp, content = service._http.request(download_url)
-        if resp.status == 200:
-            return content
-        else:
-            print('An error occurred: %s' % resp)
-            return None
-    else:
-        # The file doesn't have any content stored on Drive.
-        return None
 
 
 if __name__ == '__main__':
