@@ -1,86 +1,73 @@
 # Localizator
-Download and format your Drive sheet to iOS or Android localized file
 
-## Google Drive API KEY
-If you don't have already an API key ( and you certainly don't ) visit https://developers.google.com/drive/v3/web/quickstart/python
-Follow the Step 1 and 2.
-You now have to move the *client_secret.json file into the localizator folder*.
+Localizator is a Node.js program that automates the process of generating localization files for different platforms (web, iOS, and Android) using data from a Google Spreadsheet.
 
+## Prerequisites
 
-## Dependencies
-Python3 is required. If you don't have python3, go on https://www.python.org/downloads/
+Before running the program, make sure you have the following:
 
+1. Node.js installed on your machine.
+2. A Google Cloud Platform project with the Google Drive API enabled.
+3. A `client_secret.json` file containing your Google Cloud Platform project credentials.
 
-You may need to install several packages too
+Step 2 and 3 can be done following those instructions: https://developers.google.com/drive/api/quickstart/nodejs
 
-```shell
-pip3 install httplib2
-pip3 install google-api-python-client
-```
+## Installation
+
+1. Clone the repository:
+
+   ```
+   git clone https://github.com/LivioGama/localizator.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```
+   cd localizator
+   ```
+
+3. Install the dependencies:
+
+   ```
+   npm install
+   ```
+
+4. Place your `client_secret.json` file in the project directory.
 
 ## Usage
-```shell
-python3 localizator.py --help
-```
 
-## Nice to Have
-
-I recommend you to create a `localizator.sh` file containing your command line
-
-Example :
-```shell
-#localizator.sh
-python3 localizator/localyzator.py --id=MY_SHEET_ID --path=PATH_TO_RESSOURCE
-```
-
-Then in your `bash_profile` add the `Localize` alias as following :
-
-```shell
-echo "alias Localize='sh localizator.sh'" >> ~/.bash_profile
-#update your settings
-source ~/.bash_profile
-```
-
-Now, simply run `Localize` from your workspace!
-
-
-## iOS components
-
-### Localizator.swift
-
-Use Localizator.swift to download your Localizable strings from a distant server. It allow you to change your strings files while your app is on the appstore.
-
-#### Download
-```swift
-Localizator.synchronize { (success) in
-            //Do some stuff here, like dismissing loader
- }
-```
-
-#### Usage
-Now you simply have to use the `Localizator.localizedString` function to localize your text.
+To run the program, use the following command:
 
 ```
-//Exemple of strings file
-"Hello" = "Bonjour";
+node localizator.js [options]
 ```
 
-```swift
-myLabel.text = Localizator.localizedString("Hello")
-//OR
-myLabel.text = ~"Hello"
+### Options
 
-//You can also do myLabel.text = l("Hello")
-//myLabel.text will be "Bonjour"
+- `--id`: Specify the ID of the Google Spreadsheet file to use for localization. If not provided, the program will prompt you to select a file from the list of available files.
+- `--gid`: Specify the ID of the sheet within the Google Spreadsheet file to use for localization. If not provided, the program will use the first sheet.
+- `--languages`: Specify a comma-separated list of languages to generate localization files for. Default is 'en'.
+- `--platform`: Specify the platform for which to generate localization files. Valid options are 'web', 'ios', and 'android'. Default is 'web'.
+- `--path`: Specify the output path for the generated localization files. Default is './'.
+- `--keep_csv`: Keep the temporary CSV file after generating the localization files.
+
+## Example
+
+To generate localization files for the web platform using a specific Google Spreadsheet file and the languages 'en' and 'fr' into an app in a monorepo located at `apps/frontend/i18n`  run:
+
+```
+node localizator.js --path=../frontend/i18n --id YOUR_FILE_ID --languages en,fr
 ```
 
+## Contributing
 
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-### LocalizedComponents.swift
+## License
 
-Localized components are groups of UIComponentns ( as UILabel, UIButton, UITextfield...) which have some additionnal (IBInspectable) attributes.
+This project is licensed under the [MIT License](LICENSE).
 
-For example, in you xib/storybord file, you can set the `localizedText` from `LocalizedLabel`. At the runtime, the `localizedText` will be replace by his localized value using the `Localizator.localizedString` function
+## Acknowledgements
 
-
-
+- Co-created by [Livio Gamassia](https://github.com/LivioGama) and [Celian Moutafis](https://github.com/CelianMoutafis) and adapted to NodeJS.
+- Uses the [Google Drive API](https://developers.google.com/drive/api/quickstart/nodejs) for accessing Google Spreadsheets.

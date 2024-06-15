@@ -1,0 +1,17 @@
+{
+  "name": "localizator-js",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "update-translations": "node localizator.js --path=../frontend/i18n --languages=fr,de,it"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "googleapis": "^140.0.0",
+    "log4node": "^0.1.6",
+    "yargs": "^17.7.2"
+  },
+  "private": true
+}
